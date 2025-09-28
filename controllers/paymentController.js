@@ -67,8 +67,8 @@ exports.createCheckoutSession = async (req, res) => {
             quantity: 1
           }
         ],
-        success_url: "http://localhost:5173/minha-conta",
-        cancel_url: "http://localhost:5173/cancelado",
+        success_url: "https://pontoseguromilhas.com.br/minha-conta",
+        cancel_url: "https://pontoseguromilhas.com.br/cancelado",
         metadata: { passagemId: newPassagem._id.toString() }
       });
     } catch (stripeErr) {
@@ -83,3 +83,4 @@ exports.createCheckoutSession = async (req, res) => {
     res.status(500).json({ error: "Erro ao criar passagem ou sessão do Stripe" });
   }
 };
+
