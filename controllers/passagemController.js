@@ -10,7 +10,9 @@ exports.createPassagem = async (req, res) => {
       flightPrice,
       boardingFee,
       emissionFee,
-      totalPrice
+      totalPrice,
+      fromLocationName, // adicionado
+      toLocationName    // adicionado
     } = req.body;
 
     const newPassagem = new Passagem({
@@ -19,7 +21,9 @@ exports.createPassagem = async (req, res) => {
       flight: { idaFlight, voltaFlight },
       baggage: { addLuggage },
       prices: { flightPrice, boardingFee, emissionFee, totalPrice },
-      status: "Aguardando emissão" // status inicial
+      status: "Aguardando emissão", // status inicial
+      fromLocationName, // salva no DB
+      toLocationName    // salva no DB
     });
 
     await newPassagem.save();
@@ -51,13 +55,14 @@ exports.updateStatus = async (req, res) => {
   }
 };
 
-
 // Buscar passagens do usuário logado
 exports.getPassagens = async (req, res) => {
   try {
-    const passagens = await Passagem.find({ user: req.user.id }); // 🔹 busca só as dele
+    const passagens = await Passagem.find({ user: req.user._id }); // 🔹 busca só as dele
     res.json(passagens);
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar passagens." });
   }
 };
+
+
