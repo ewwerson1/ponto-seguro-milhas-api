@@ -12,18 +12,22 @@ exports.createCheckoutSession = async (req, res) => {
       flightPrice,
       boardingFee,
       emissionFee,
-      totalPrice
+      totalPrice,
+      fromLocationName,
+      toLocationName
     } = req.body;
 
-    // 🔹 Cria passagem no banco já associada ao usuário
+    // Cria passagem no banco já associada ao usuário
     const newPassagem = new Passagem({
       user: req.user._id,
       passenger,
       flight: { idaFlight, voltaFlight },
       baggage: { addLuggage },
       prices: { flightPrice, boardingFee, emissionFee, totalPrice },
+      locations: { fromLocationName, toLocationName }, // 🔹 adicionado
       status: "Aguardando pagamento"
     });
+
 
     await newPassagem.save();
 
@@ -54,3 +58,4 @@ exports.createCheckoutSession = async (req, res) => {
     res.status(500).json({ error: "Erro ao criar sessão do Stripe" });
   }
 };
+
