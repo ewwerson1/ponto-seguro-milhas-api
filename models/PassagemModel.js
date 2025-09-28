@@ -27,9 +27,13 @@ const passagemSchema = new mongoose.Schema({
     emissionFee: Number,
     totalPrice: Number
   },
+  locations: {  // 🔹 adiciona aqui
+    fromLocationName: String,
+    toLocationName: String
+  },
   status: {
     type: String,
-    default: "Aguardando emissão" // status inicial
+    default: "Aguardando emissão"
   },
   createdAt: {
     type: Date,
@@ -38,3 +42,4 @@ const passagemSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Passagem", passagemSchema);
+
